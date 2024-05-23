@@ -1,7 +1,7 @@
 # src/data_manager.py
 import json
 import os
-from models import User, Profile
+from models import User, Profile, Task, datetime, Priority, Status
 
 class DataManager:
     def __init__(self):
@@ -47,3 +47,44 @@ class DataManager:
                 } for task in profile.tasks]
             })
         self.save_data(self.profile_file, profiles)
+
+    def load_profiles(self):
+        profiles = self.load_data(self.profile_file)
+        for profile_data in profiles:
+            leader = User.find_user_by_username(profile_data["leader"])
+            profile = Profile(profile_data["unique_identifier"], profile_data["title"], leader)
+            for member_username in profile_data["members"]:
+                user = User.find_user_by_username(member_username)
+                profile.add_member(user)
+            for task_data in profile_data["tasks"]:
+                assignees = [User.find_user_by_username(username) for username in task_data["assignees"]]
+                task = Task(task_data["title"], task_data["description"], assignees)
+                task.id = task_data["id"]
+                task.start_time = datetime.fromisoformat(task_data["start_time"])
+                task.end_time = datetime.fromisoformat(task_data["end_time"])
+                task.priority = Priority[task_data["priority"]]
+                task.status = Status[task_data["status"]]
+                task.log = task_data["log"]
+                task.comments = [(comment[0], comment[1], datetime.fromisoformat(comment[2])) for comment in task_data["comments"]]
+                profile.add_task(task)
+        return Profile.profiles
+
+    def load_data(self, file):
+        if os.path.exists(file):
+            with open(file, 'r') as f:
+                return json.load(f)
+        return []
+
+    def save_data(self, file, data):
+        with open(file, 'w') as f:
+            json.dump(data, f, indent=4)
+
+    def admin_exists(self):
+        users = self.load_data(self.user_file)
+        return any(user["username"] == "admin" for user in users)
+
+    def purge_all_data(self):
+        if os.path.exists(self.user_file):
+            os.remove(self.user_file)
+        if os.path.exists(self.profile_file):
+            os.remove(self.profile_file)
