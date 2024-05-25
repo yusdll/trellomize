@@ -14,3 +14,16 @@ class Logger:
         ch.setFormatter(formatter)
         self.logger.addHandler(fh)
         self.logger.addHandler(ch)
+
+    def log(self, message, level="info"):
+        if level == "debug":
+            self.logger.debug(message)
+        elif level == "info":
+            self.logger.info(message)
+        elif level == "warning":
+            self.logger.warning(message)
+        elif level == "error":
+            self.logger.error(message)
+        elif level == "critical":
+            self.logger.critical(message)
+            
