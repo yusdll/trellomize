@@ -1,6 +1,6 @@
 # src/profile_manager.py
 from models import Profile, User
-from datamanager import DataManager
+from data_manager import DataManager
 from logger import Logger
 
 class ProfileManager:
