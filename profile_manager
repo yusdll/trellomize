@@ -1,0 +1,21 @@
+# src/profile_manager.py
+from models import Profile, User
+from datamanager import DataManager
+from logger import Logger
+
+class ProfileManager:
+    def __init__(self):
+        self.data_manager = DataManager()
+        self.logger = Logger()
+
+    def create_profile(self, unique_identifier, title, leader):
+        if not unique_identifier or not title:
+            print("Unique identifier and title are required.")
+            return None
+        profile = Profile(unique_identifier, title, leader)
+        self.data_manager.save_profiles()
+        self.logger.log(f"Profile {title} created by {leader.username}.")
+        return profile
+
+    def find_user_by_username(self, username):
+        return User.find_user_by_username(username)
