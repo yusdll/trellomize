@@ -1,6 +1,6 @@
 # src/manager.py
 import argparse
-from datamanager import DataManager
+from data_manager import DataManager
 from models import User
 
 def create_admin(username, password):
