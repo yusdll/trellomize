@@ -31,10 +31,10 @@ class DataManager:
         return User.users
 
         def save_profiles(self):
-        profiles = [] # store profile data by creating a list
+         profiles = [] # store profile data by creating a list
         # iterate over the specified list and convert each profile to a dictionary
         for profile in Profile.profiles:
-        for profile in Profile.profiles:
+         for profile in Profile.profiles:
             profiles.append({
                 "unique_identifier": profile.unique_identifier,
                 "title": profile.title,

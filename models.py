@@ -20,7 +20,7 @@ class Status(Enum):
 
 # Represent a user in the system by user class
 class User:
-class User:
+
 
     # list to store all users
     users = []
