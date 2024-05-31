@@ -30,8 +30,10 @@ class DataManager:
             user.is_active = user_data["is_active"]
         return User.users
 
-    def save_profiles(self):
-        profiles = []
+        def save_profiles(self):
+        profiles = [] # store profile data by creating a list
+        # iterate over the specified list and convert each profile to a dictionary
+        for profile in Profile.profiles:
         for profile in Profile.profiles:
             profiles.append({
                 "unique_identifier": profile.unique_identifier,
@@ -53,14 +55,19 @@ class DataManager:
             })
         self.save_data(self.profile_file, profiles)
 
+    # Load profiles from the profile file
     def load_profiles(self):
         profiles = self.load_data(self.profile_file)
+        
+        # create Profile objects from the loaded data
         for profile_data in profiles:
             leader = User.find_user_by_username(profile_data["leader"])
             profile = Profile(profile_data["unique_identifier"], profile_data["title"], leader)
+            # add members to the profile
             for member_username in profile_data["members"]:
                 user = User.find_user_by_username(member_username)
                 profile.add_member(user)
+            # add tasks to the profile
             for task_data in profile_data["tasks"]:
                 assignees = [User.find_user_by_username(username) for username in task_data["assignees"]]
                 task = Task(task_data["title"], task_data["description"], assignees)
