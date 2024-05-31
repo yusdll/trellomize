@@ -3,13 +3,16 @@ import json
 import os
 from models import User, Profile, Task, datetime, Priority, Status
 
+# DataManager class to handle data persistence
 class DataManager:
     def __init__(self):
-        self.user_file = "users.json"
-        self.profile_file = "profiles.json"
+        self.user_file = "users.json" # store user data
+        self.profile_file = "profiles.json" #store profile data
+
 
     def save_user(self, user):
         users = self.load_data(self.user_file)
+        # append the new user data to the list
         users.append({
             "username": user.username,
             "email": user.email,
@@ -18,8 +21,10 @@ class DataManager:
         })
         self.save_data(self.user_file, users)
 
+    # Loading users from the user file
     def load_users(self):
         users = self.load_data(self.user_file)
+        # create user objects from the loaded data and add them to specified file
         for user_data in users:
             user = User(user_data["username"], user_data["email"], user_data["password"])
             user.is_active = user_data["is_active"]
