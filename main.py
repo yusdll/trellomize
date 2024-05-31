@@ -57,3 +57,4 @@ def view_tasks(profile):
     tasks = profile.get_tasks(status_filter)
     for task in tasks:
         print(task)
+        
