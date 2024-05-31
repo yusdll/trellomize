@@ -3,6 +3,7 @@ from user_manager import UserManager
 from profile_manager import ProfileManager
 from models import User, Profile, Task, Priority, Status
 
+# Function to register a new user
 def register_user(user_manager):
     print("User Registration")
     username = input("Enter username: ")
@@ -10,12 +11,14 @@ def register_user(user_manager):
     password = input("Enter password: ")
     user_manager.register_user(username, email, password)
 
+# Function to log in a user
 def login(user_manager):
     print("User Login")
     username = input("Enter username: ")
     password = input("Enter password: ")
     return user_manager.login(username, password)
 
+# Function to create a new profile
 def create_profile(profile_manager, current_user):
     print("Profile Creation")
     title = input("Enter profile title: ")
@@ -25,7 +28,7 @@ def create_profile(profile_manager, current_user):
     return profile
 
 
-
+# Function to add a member to a profile
 def add_member_to_profile(profile_manager, profile):
     print("Adding Member to Profile")
     username = input("Enter username of the user to add: ")
@@ -36,6 +39,7 @@ def add_member_to_profile(profile_manager, profile):
     else:
         print("User not found.")
 
+# Function to create a new task within a profile
 def create_task(profile):
     print("Task Creation")
     title = input("Enter task title: ")
@@ -51,6 +55,7 @@ def create_task(profile):
     print("Task created successfully.")
 
 
+# Function to view tasks within a profile
 def view_tasks(profile):
     print("Viewing Tasks")
     status_filter = input("Enter task status to filter by (leave empty to view all tasks): ").upper()
@@ -58,7 +63,7 @@ def view_tasks(profile):
     for task in tasks:
         print(task)
         
- 
+ # Main function to run the code
 def main():
     user_manager = UserManager()
     profile_manager = ProfileManager()
