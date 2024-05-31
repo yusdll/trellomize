@@ -24,12 +24,15 @@ class UserManager:
         self.data_manager.save_user(user)
         self.logger.log(f"User {username} registered.")
         print("User registered successfully.")
-
+        
+  # Login a user
     def login(self, username, password):
+        # find the user by their username
         user = User.find_user_by_username(username)
         if not user or user.password != password:
             print("Invalid username or password.")
             return None
+        # checking the conditions, the activeness of a user
         if not user.is_active:
             print("This account is deactivated.")
             return None
