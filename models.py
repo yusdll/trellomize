@@ -15,9 +15,9 @@ class Status(Enum):
     DOING = 3
     DONE = 4
     ARCHIVED = 5
-
+#test
 class User:
-    users = [ ]
+    users = []
 
     def __init__(self, username, email, password):
         self.username = username
