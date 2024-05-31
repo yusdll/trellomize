@@ -69,3 +69,90 @@ def view_tasks(profile_manager, profile):
         return
     for task in tasks:
         print(f"Task '{task.title}' - Status: {task.status.name}")
+
+        def main():
+    data_manager = DataManager()
+    if not data_manager.admin_exists():
+        console.print("[bold green]Creating admin user...[/bold green]")
+        admin = User("admin", "admin@example.com", "password")
+        data_manager.save_user(admin)
+
+    while True:
+        console.print("[bold green]Welcome to the Task Manager![/bold green]")
+        console.print("[bold]Please select an option:[/bold]")
+        console.print("1. Register")
+        console.print("2. Login")
+        console.print("3. Create Profile")
+        console.print("4. Add Member to Profile")
+        console.print("5. Create Task")
+        console.print("6. View Tasks")
+        console.print("7. Create Admin")
+        console.print("8. Purge Data")
+        console.print("9. Exit")
+
+        choice = console.input("[bold]Enter your choice (1-9): [/bold]")
+
+        if choice == "1":
+            register_user(UserManager())
+        elif choice == "2":
+            user = login(UserManager())
+            if user:
+                console.print(f"[bold green]Logged in as {user.username}[/bold green]")
+                while True:
+                    console.print(f"[bold green]Logged in as {user.username}[/bold green]")
+                    console.print("[bold]Please select an option:[/bold]")
+                    console.print("1. Create Profile")
+                    console.print("2. Add Member to Profile")
+                    console.print("3. Create Task")
+                    console.print("4. View Tasks")
+                    console.print("5. Logout")
+
+                    choice = console.input("[bold]Enter your choice (1-5): [/bold]")
+
+                    if choice == "1":
+                        profile = create_profile(ProfileManager())
+                        if profile:
+                            create_task(ProfileManager(), profile)
+                    elif choice == "2":
+                        profile = create_profile(ProfileManager())
+                        if profile:
+                            add_member_to_profile(ProfileManager(), profile)
+                    elif choice == "3":
+                        profile = create_profile(ProfileManager())
+                        if profile:
+                            create_task(ProfileManager(), profile)
+                    elif choice == "4":
+                        profile = create_profile(ProfileManager())
+                        if profile:
+                            view_tasks(ProfileManager(), profile)
+                    elif choice == "5":
+                        console.print("[bold green]Logged out[/bold green]")
+                        break
+                    else:
+                        console.print("[bold red]Invalid choice. Please try again.[/bold red]")
+        elif choice == "3":
+            create_profile(ProfileManager())
+        elif choice == "4":
+            profile = create_profile(ProfileManager())
+            if profile:
+                add_member_to_profile(ProfileManager(), profile)
+        elif choice == "5":
+            profile = create_profile(ProfileManager())
+            if profile:
+                create_task(ProfileManager(), profile)
+        elif choice == "6":
+            profile = create_profile(ProfileManager())
+            if profile:
+                view_tasks(ProfileManager(), profile)
+        elif choice == "7":
+            create_admin("admin", "password")
+        elif choice == "8":
+            purge_data()
+        elif choice == "9":
+            console.print("[bold green]Exiting Task Manager. Goodbye![/bold green]")
+            break
+        else:
+            console.print("[bold red]Invalid choice. Please try again.[/bold red]")
+
+if __name__ == "__main__":
+    main()
