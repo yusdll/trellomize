@@ -22,3 +22,31 @@ def login(user_manager):
     password = input ("Enter password: ")   
     A = user_manager.login(username, password)
     return A
+
+def create_profile(profile_manager):
+    print("Create Profile")
+    unique_identifier = input("Enter unique identifier: ")
+    title = input("Enter profile title: ")
+    leader_username = input("Enter leader's username: ")
+    leader = User.find_user_by_username(leader_username)
+    if leader is None:
+        print("Leader not found.")
+        return None
+
+    profile = profile_manager.create_profile(unique_identifier, title, leader)
+    if profile is None:
+        print("Profile creation failed.")
+        return None
+    else:
+        print(f"Profile '{title}' created successfully.")
+        return profile
+        
+def add_member_to_profile(profile_manager, profile):
+    print("Add Member to Profile")
+    member_username = input("Enter member's username: ")
+    member = User.find_user_by_username(member_username)
+    if member is None:
+        print("Member not found.")
+        return
+    profile.add_member(member)
+    print(f"Member '{member_username}' added to profile '{profile.title}'.")
