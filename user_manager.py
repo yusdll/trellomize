@@ -3,18 +3,23 @@ from models import User
 from data_manager import DataManager
 from logger import Logger
 
+# UserManager class to manage user-related operations
 class UserManager:
     def __init__(self):
+        # initialize the data manager and logger
         self.data_manager = DataManager()
         self.logger = Logger()
-
+    # Register a new user
     def register_user(self, username, email, password):
+        # check the required conditions for providing fields
         if not username or not email or not password:
             print("Username, email, and password are required.")
             return
+        # check the existence username already exists
         if User.find_user_by_username(username):
             print("Username already exists.")
             return
+            
         user = User(username, email, password)
         self.data_manager.save_user(user)
         self.logger.log(f"User {username} registered.")
