@@ -81,20 +81,25 @@ class DataManager:
                 profile.add_task(task)
         return Profile.profiles
 
+    # Load datas from a file
     def load_data(self, file):
         if os.path.exists(file):
             with open(file, 'r') as f:
                 return json.load(f)
+        # return an empty list        
         return []
 
+    # Save data to a file
     def save_data(self, file, data):
         with open(file, 'w') as f:
             json.dump(data, f, indent=4)
 
+    # Check the existence of admin user
     def admin_exists(self):
         users = self.load_data(self.user_file)
         return any(user["username"] == "admin" for user in users)
 
+    # Purge all data by removing the user and profile files
     def purge_all_data(self):
         if os.path.exists(self.user_file):
             os.remove(self.user_file)
