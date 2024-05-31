@@ -21,3 +21,4 @@ class TestCodeManagementSystem(unittest.TestCase):
         self.assertEqual(profile.leader, user)
         self.assertIn(user, profile.members)
         
+        
