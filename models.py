@@ -17,7 +17,7 @@ class Status(Enum):
     ARCHIVED = 5
 
 class User:
-    users = []
+    users = [ ]
 
     def __init__(self, username, email, password):
         self.username = username
