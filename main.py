@@ -58,3 +58,68 @@ def view_tasks(profile):
     for task in tasks:
         print(task)
         
+ 
+def main():
+    user_manager = UserManager()
+    profile_manager = ProfileManager()
+
+    # Load existing users and profiles
+    user_manager.data_manager.load_users()
+    profile_manager.data_manager.load_profiles()
+
+    current_user = None
+
+    while True:
+        print("\Code Management System")
+        if not current_user:
+            print("1. Register")
+            print("2. Login")
+            print("9. Exit")
+        else:
+            print("3. Create Profile")
+            print("4. Add Member to Profile")
+            print("6. Create Task")
+            print("7. View Tasks")
+            print("8. Logout")
+
+        choice = input("Enter your choice: ")
+
+        if choice == "1" and not current_user:
+            register_user(user_manager)
+        elif choice == "2" and not current_user:
+            current_user = login(user_manager)
+        elif choice == "3" and current_user:
+            create_profile(profile_manager, current_user)
+        elif choice == "4" and current_user:
+            profile_title = input("Enter profile title to add member to: ")
+            profile = Profile.find_profile_by_title(profile_title)
+            if profile and profile.leader == current_user:
+                add_member_to_profile(profile_manager, profile)
+            else:
+                print("Profile not found or you are not the leader.")
+        elif choice == "6" and current_user:
+            profile_title = input("Enter profile title to create task for: ")
+            profile = Profile.find_profile_by_title(profile_title)
+            if profile and profile.leader == current_user:
+                create_task(profile)
+            else:
+                print("Profile not found or you are not the leader.")
+        elif choice == "7" and current_user:
+            profile_title = input("Enter profile title to view tasks: ")
+            profile = Profile.find_profile_by_title(profile_title)
+            if profile:
+                view_tasks(profile)
+            else:
+                print("Profile not found.")
+        elif choice == "8" and current_user:
+            current_user = None
+            print("Logged out.")
+        elif choice == "9":
+            break
+        else:
+            print("Invalid choice or you need to login first.")
+
+if __name__ == "__main__":
+    main()
+     
+        
