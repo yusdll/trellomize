@@ -40,3 +40,12 @@ def create_profile(profile_manager):
     else:
         print(f"Profile '{title}' created successfully.")
         return profile
+def add_member_to_profile(profile_manager, profile):
+    print("Add Member to Profile")
+    member_username = input("Enter member's username: ")
+    member = User.find_user_by_username(member_username)
+    if member is None:
+        print("Member not found.")
+        return
+    profile.add_member(member)
+    print(f"Member '{member_username}' added to profile '{profile.title}'.")
