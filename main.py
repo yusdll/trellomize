@@ -40,7 +40,7 @@ def create_profile(profile_manager):
     else:
         print(f"Profile '{title}' created successfully.")
         return profile
-        
+
 def add_member_to_profile(profile_manager, profile):
     print("Add Member to Profile")
     member_username = input("Enter member's username: ")
@@ -50,3 +50,22 @@ def add_member_to_profile(profile_manager, profile):
         return
     profile.add_member(member)
     print(f"Member '{member_username}' added to profile '{profile.title}'.")
+
+def create_task(profile_manager, profile):
+    print("Create Task")
+    task_title = input("Enter task title: ")
+    task_description = input("Enter task description: ")
+    assignees = input("Enter assignees (comma-separated): ")
+    assignees = [assignee.strip() for assignee in assignees.split(",")]
+    task = Task(task_title, task_description, assignees)
+    profile.add_task(task)
+    print(f"Task '{task_title}' created for profile '{profile.title}'.")
+
+def view_tasks(profile_manager, profile):
+    print("View Tasks")
+    tasks = profile.get_tasks()
+    if not tasks:
+        print("No tasks found.")
+        return
+    for task in tasks:
+        print(f"Task '{task.title}' - Status: {task.status.name}")
